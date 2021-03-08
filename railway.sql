@@ -9,22 +9,6 @@ CREATE TABLE IF NOT EXISTS `wagon_type`(
     `cost_mod` FLOAT NOT NULL
 )ENGINE=INNODB;
 
-DROP TABLE IF EXISTS `wagon`;
-CREATE TABLE IF NOT EXISTS `wagon`(
-	`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    `number` INT NOT NULL,
-    `wagon_type_id` INT NOT NULL,
-    FOREIGN KEY(`wagon_type_id`) REFERENCES `wagon_type`(`id`)
-)ENGINE=INNODB;
-
-DROP TABLE IF EXISTS `seat`;
-CREATE TABLE IF NOT EXISTS `seat`(
-	`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    `number` INT NOT NULL,
-    `wagon_id` INT NOT NULL,
-    FOREIGN KEY(`wagon_id`) REFERENCES `wagon`(`id`)
-)ENGINE=INNODB;
-
 DROP TABLE IF EXISTS `train_type`;
 CREATE TABLE IF NOT EXISTS `train_type`(
     `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -40,13 +24,22 @@ CREATE TABLE IF NOT EXISTS `train`(
     FOREIGN KEY(`train_type_id`) REFERENCES `train_type`(`id`)
 )ENGINE=INNODB;
 
-
-DROP TABLE IF EXISTS `wagon_in_train`;
-CREATE TABLE IF NOT EXISTS `wagon_in_train`(
-	`train_id` INT NOT NULL,
-    `wagon_id` INT NOT NULL,
-    FOREIGN KEY(`wagon_id`) REFERENCES `wagon`(`id`),
+DROP TABLE IF EXISTS `wagon`;
+CREATE TABLE IF NOT EXISTS `wagon`(
+	`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `number` INT NOT NULL,
+    `wagon_type_id` INT NOT NULL,
+    `train_id` INT NOT NULL,
+    FOREIGN KEY(`wagon_type_id`) REFERENCES `wagon_type`(`id`),
     FOREIGN KEY(`train_id`) REFERENCES `train`(`id`)
+)ENGINE=INNODB;
+
+DROP TABLE IF EXISTS `seat`;
+CREATE TABLE IF NOT EXISTS `seat`(
+	`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `number` INT NOT NULL,
+    `wagon_id` INT NOT NULL,
+    FOREIGN KEY(`wagon_id`) REFERENCES `wagon`(`id`)
 )ENGINE=INNODB;
 
 DROP TABLE IF EXISTS `route`;
@@ -55,20 +48,20 @@ CREATE TABLE IF NOT EXISTS `route`(
 	`title` VARCHAR(256) NOT NULL
 )ENGINE=INNODB;
 
-DROP TABLE IF EXISTS `seats_in_sheduled_route`;
-CREATE TABLE IF NOT EXISTS `seats_in_sheduled_route`(
-    `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    `seat_id` INT NOT NULL,
-    FOREIGN KEY(`seat_id`) REFERENCES `seat`(`id`)
-)ENGINE=INNODB;
-
 DROP TABLE IF EXISTS `sheduled_route`;
 CREATE TABLE IF NOT EXISTS `sheduled_route`(
     `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	`route_id` INT NOT NULL,
-    `seats_in_sheduled_route_id` INT NOT NULL,
-    FOREIGN KEY(`route_id`) REFERENCES `route`(`id`),
-    FOREIGN KEY(`seats_in_sheduled_route_id`) REFERENCES `seats_in_sheduled_route`(`id`)
+    FOREIGN KEY(`route_id`) REFERENCES `route`(`id`)
+)ENGINE=INNODB;
+
+DROP TABLE IF EXISTS `seat_sheduled_route`;
+CREATE TABLE IF NOT EXISTS `seat_sheduled_route`(
+    `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `seat_id` INT NOT NULL,
+    `sheduled_route_id` INT NOT NULL,
+    FOREIGN KEY(`seat_id`) REFERENCES `seat`(`id`),
+    FOREIGN KEY(`sheduled_route_id`) REFERENCES `sheduled_route`(`id`)
 )ENGINE=INNODB;
 
 DROP TABLE IF EXISTS `city`;
@@ -87,6 +80,7 @@ CREATE TABLE IF NOT EXISTS `station`(
 
 DROP TABLE IF EXISTS `station_in_route`;
 CREATE TABLE IF NOT EXISTS `station_in_route`(
+    `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `sheduled_route_id` INT NOT NULL,
 	`station_id` INT NOT NULL,
     `time_comming` DATE NOT NULL,
@@ -97,6 +91,7 @@ CREATE TABLE IF NOT EXISTS `station_in_route`(
 
 DROP TABLE IF EXISTS `station_cost`;
 CREATE TABLE IF NOT EXISTS `station_cost`(
+    `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `station_id_first` INT NOT NULL,
 	`station_id_second` INT NOT NULL,
     `station_cost` FLOAT NOT NULL,
@@ -114,10 +109,8 @@ CREATE TABLE IF NOT EXISTS `user`(
 DROP TABLE IF EXISTS `order`;
 CREATE TABLE IF NOT EXISTS `order`(
     `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	`sheduled_route_id` INT NOT NULL,
     `user_id` INT NOT NULL,
-    `seat_id` INT NOT NULL,
-    `wagon_id` INT NOT NULL,
-    FOREIGN KEY(`sheduled_route_id`) REFERENCES `sheduled_route`(`id`),
+    `seat_sheduled_route_id` INT NOT NULL,
+    FOREIGN KEY(`seat_sheduled_route_id`) REFERENCES `seat_sheduled_route`(`id`),
     FOREIGN KEY(`user_id`) REFERENCES `user`(`id`)
 )ENGINE=INNODB;
