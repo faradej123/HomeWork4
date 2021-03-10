@@ -6,4 +6,10 @@
     <p>Пароль</p>
     <input type="password" name="password" placeholder="Введите пароль"><br><br>
     <button type="submit">Зарегистрироваться</button>
+    <?php
+        if ($_SESSION['message']) {
+            echo '<p>' . $_SESSION['message'] . '</p>';
+        }
+        unset($_SESSION['message']);
+    ?>
 </form>

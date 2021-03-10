@@ -35,6 +35,13 @@ return [
             "params" => "",
         ],
     ],
+    "signin/do" => [
+        "POST" => [
+            "controller" => "\\MikhailovIgor\\Controllers\\SignInController",
+            "action" => "doSignIn",
+            "params" => "",
+        ],
+    ],
 ];
 
 /*return [
