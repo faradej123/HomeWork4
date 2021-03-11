@@ -42,6 +42,13 @@ return [
             "params" => "",
         ],
     ],
+    "signout" => [
+        "GET" => [
+            "controller" => "\\MikhailovIgor\\Controllers\\SignOutController",
+            "action" => "signOut",
+            "params" => "",
+        ],
+    ],
 ];
 
 /*return [

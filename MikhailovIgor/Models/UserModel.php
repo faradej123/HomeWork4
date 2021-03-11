@@ -24,15 +24,16 @@ class UserModel{
         return $userList;
     }
 
-    public function insertNewUser($userName, $userEmail, $userPassword)
+    public function insertNewUser($userName, $userEmail, $userPassword, $userType)
     {
         $pdo = DBConnector::getPdo();
         $userPassword = md5($userPassword);
-        $stmt = $pdo->prepare("INSERT INTO `user` (`firstname`, `email`, `password`, `date_created`) VALUES (?, ?, ?, ?)");//вывести в модель
+        $stmt = $pdo->prepare("INSERT INTO `user` (`firstname`, `email`, `password`, `date_created`, `role_id`) VALUES (?, ?, ?, ?, ?)");
         $stmt->bindParam(1, $userName);
         $stmt->bindParam(2, $userEmail);
         $stmt->bindParam(3, $userPassword);
         $stmt->bindParam(4, time());
+        $stmt->bindParam(5, $userType);
         $stmt->execute();
     }
 }

@@ -36,7 +36,7 @@ class RegistrationController extends \Core\Controller{
             $_SESSION['message'] = 'Проверьте правильность заполненных полей';
             header('Location: https://' . $_SERVER['SERVER_NAME'] . '/registration');
         } else {
-            $this->userModel->insertNewUser($userName, $userEmail, $userPassword);
+            $this->userModel->insertNewUser($userName, $userEmail, $userPassword, 2);
             $_SESSION['message'] = 'Пользователь успешно зарегистрирован';
             header('Location: https://' . $_SERVER['SERVER_NAME'] . '/signin');
         }

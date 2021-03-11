@@ -35,6 +35,7 @@ class SignInController extends \Core\Controller{
 
         if (count($userList) > 0) {
             $_SESSION['user_id'] = $userList[0]["id"];
+            $_SESSION['firstname'] = $userList[0]["firstname"];
             $_SESSION['message'] = 'Авторизация прошла успешно';
             header('Location: https://' . $_SERVER['SERVER_NAME'] . '/signin');
     
