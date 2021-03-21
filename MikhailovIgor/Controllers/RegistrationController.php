@@ -5,8 +5,6 @@ use Core\Configs\Consts;
 
 class RegistrationController extends \Core\Controller{
 
-    private $productList = [];
-
     public function __construct()
     {
     }
