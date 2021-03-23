@@ -4,8 +4,6 @@ use Core\Configs\Consts;
 
 class SignInController extends \Core\Controller{
 
-    private $productList = [];
-
     public function __construct()
     {
     }

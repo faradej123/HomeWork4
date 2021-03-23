@@ -17,11 +17,11 @@ session_start();
         }
     ?>
     <ul class="menu">
+        <li><?= "<a href=https://" . $_SERVER['HTTP_HOST'] . "/signup/>Регистрация</a>" ?></li>
+        <li><?= "<a href=https://" . $_SERVER['HTTP_HOST'] . "/signin/>Ввойти</a>" ?></li><br>
         <li><?= "<a href=https://" . $_SERVER['HTTP_HOST'] . "/export/xml/>Експорт в XML</a>" ?></li>
         <li><?= "<a href=https://" . $_SERVER['HTTP_HOST'] . "/export/json/>Експорт в JSON</a>" ?></li>
         <li><?= "<a href=https://" . $_SERVER['HTTP_HOST'] . "/export/csv/>Експорт в CSV</a>" ?></li>
-        <li><?= "<a href=https://" . $_SERVER['HTTP_HOST'] . "/registration/>Регистрация</a>" ?></li>
-        <li><?= "<a href=https://" . $_SERVER['HTTP_HOST'] . "/signin/>Ввойти</a>" ?></li>
     </ul>
 </header>
 <div class="wrapper">

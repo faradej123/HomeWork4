@@ -1,5 +1,5 @@
 <?php
-namespace MikhailovIgor\Lib;
+namespace Core;
 use Core\Configs\Consts;
 use Exception;
 use PDO;

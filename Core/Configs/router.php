@@ -4,7 +4,7 @@ return [
     "" => [
         "GET" => [
             "controller" => "MikhailovIgor\\Controllers\\HomePageController",
-            "action" => "showUrls",
+            "action" => "showProducts",
             "params" => "",
         ],
     ],
@@ -15,15 +15,15 @@ return [
             "params" => "$1",
         ],
     ],
-    "registration" => [
+    "signup" => [
         "GET" => [
-            "controller" => "\\MikhailovIgor\\Controllers\\RegistrationController",
+            "controller" => "\\MikhailovIgor\\Controllers\\SignUpController",
             "action" => "showRegistrationForm",
             "params" => "",
         ],
-    ],"registration/do" => [
+    ],"signup/do" => [
         "POST" => [
-            "controller" => "\\MikhailovIgor\\Controllers\\RegistrationController",
+            "controller" => "\\MikhailovIgor\\Controllers\\SignUpController",
             "action" => "doRegistration",
             "params" => "",
         ],
