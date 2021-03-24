@@ -49,6 +49,13 @@ return [
             "params" => "",
         ],
     ],
+    "cart/addproduct/(.*)" => [
+        "GET" => [
+            "controller" => "\\MikhailovIgor\\Controllers\\CartController",
+            "action" => "addToCart",
+            "params" => "$1",
+        ],
+    ],
 ];
 
 /*return [
