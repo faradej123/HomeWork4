@@ -34,4 +34,17 @@ class UserModel extends \Core\Model{
         $stmt->bindParam(5, $role);
         $stmt->execute();
     }
+
+    public function checkUserIsExist($id)
+    {
+        $stmt = $this->pdo->prepare("SELECT * FROM `user` WHERE `id` = ?" );
+        $stmt->bindParam(1, $id);
+        $stmt->execute();
+        $userList = $stmt->fetchAll();
+        if (empty($userList)) {
+            return false;
+        } else {
+            return true;
+        }
+    }
 }

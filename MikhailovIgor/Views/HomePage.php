@@ -8,3 +8,6 @@
 </div>
 <?php endforeach; ?>
 </div>
+<?php if($_SESSION["user_not_found"]) {
+    echo("<p>" . $_SESSION["user_not_found"] . "</p>");
+} ?>
