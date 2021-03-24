@@ -50,7 +50,7 @@ return [
         ],
     ],
     "cart/addproduct/(.*)" => [
-        "GET" => [
+        "POST" => [
             "controller" => "\\MikhailovIgor\\Controllers\\CartController",
             "action" => "addToCart",
             "params" => "$1",

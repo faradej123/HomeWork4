@@ -8,7 +8,8 @@ class CartController extends \Core\Controller{
     }
 
     public function addToCart($productId){
-        $this->loadModel("productModel", "ProductModel");
+        $this->loadModel("cartModel", "CarttModel");
+        $cartModel->getProductByCurrentUser($productId);
         $productCollection = $this->productModel->getAllProducts();
 
         /*$this->data("productCollection", $productCollection);

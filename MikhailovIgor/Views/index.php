@@ -7,6 +7,13 @@ session_start();
 <head>
     <title>My Page Title</title>
     <link rel="stylesheet" href=<?= "https://" . $_SERVER['SERVER_NAME'] . "/css/style.css" ?>>
+    <?php
+        if (!empty($jsScripts)) {
+            foreach ($jsScripts as $scriptPath) {
+                echo "<script src='". $scriptPath ."'></script>";
+            }
+        }
+    ?>
 </head>
 <body>
 <header>

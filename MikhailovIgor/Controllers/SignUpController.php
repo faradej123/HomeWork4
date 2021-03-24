@@ -58,21 +58,17 @@ class SignUpController extends \Core\Controller{
             $isValidUserName = TRUE;
         } else {
             $_SESSION['userNameVerificationFail'] = "Имя пользователя должно состоять только из латинских или только из букв киррилицы, а так же состоять из количества символов в диапазано от 1 до 128";
-            //setcookie("userNameVerificationFail", "Имя пользователя должно состоять только из латинских или только из букв киррилицы, а так же состоять из количества символов в диапазано от 1 до 128", time()+3600);
         }
         $_SESSION['userName'] = $userName;
-        //setcookie("userName", $userName, time()+3600);
 
         $userEmail = filter_var($userEmail, FILTER_VALIDATE_EMAIL);
         if (!$userEmail) {
             $_SESSION['userEmailVerificationFail'] = "Email пользователя не соответствует правильному формату";
-            //setcookie("userEmailVerificationFail", "Email пользователя не соответствует правильному формату", time()+3600);
             $isValidEmail = FALSE;
         } else {
             $isValidEmail = TRUE;
         }
         $_SESSION['userEmail'] = $userEmail;
-        //setcookie("userEmail", $userEmail, time()+3600);
 
         $isValidPassword = preg_match("/(?=.*[0-9])(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z!@#$%^&*]{6,}/", $userPassword);
         if ($isValidPassword) {
@@ -80,22 +76,18 @@ class SignUpController extends \Core\Controller{
         }
         if(!$isValidPassword) {
             $_SESSION['userPasswordVerificationFail'] = "Пароль не соответствует правильному формату, он должен состоять минимум из6 символов, которые включают себя латинские буквы нижнего и верхнего регистра, цифры и символы";
-            //setcookie("userPasswordVerificationFail", "Пароль не соответствует правильному формату, он должен состоять минимум из6 символов, которые включают себя латинские буквы нижнего и верхнего регистра, цифры и символы", time()+3600);
         }
 
         $this->loadModel("userModel", "UserModel");
         $userList = $this->userModel->getUsersByEmail($userEmail);
 
         if (count($userList) > 0) {
-            //setcookie("message", "Такой пользователь уже существует", time()+3600);
             $_SESSION['message'] = 'Такой пользователь уже существует';
             header('Location: https://' . $_SERVER['SERVER_NAME'] . '/signup');
         } else if (!$isValidPassword || !$isValidUserName || !$isValidEmail) {
-            //$_SESSION['message'] = 'Проверьте правильность заполненных полей';
             header('Location: https://' . $_SERVER['SERVER_NAME'] . '/signup');
         } else {
             $this->userModel->insertNewUser($userName, $userEmail, $userPassword);
-            //setcookie("message", "Пользователь успешно зарегистрирован", time()+3600);
             $_SESSION['message'] = 'Пользователь успешно зарегистрирован';
             header('Location: https://' . $_SERVER['SERVER_NAME'] . '/signin');
         }
