@@ -5,25 +5,86 @@
 .product-container {
     border: 1px solid darkslategray;
     margin: 10px;
-    display: inline-block;
 }
 
-.product {
-    border: 1px solid darkorange;
-    float: left;
-    margin: 10px;
-    padding: 10px;
+    .product-container #messages, .product-container .products {
+        width: 100%;
+        display: flex;
+    }
+
+    .product-container #messages {
+        text-align: center;
+    }
+
+        .product-container #messages .errors,  .product-container #messages .successfuly{
+            width:100%;
+            padding:5px;
+        }
+   
+        .product-container .errors {
+            background-color: red;
+            display: inline-block;
+        }
+
+        .product-container .successfuly {
+            background-color: green;
+            display: inline-block;
+        }
+
+    .product-container .product {
+        border: 1px solid darkorange;
+        margin: 10px;
+        padding: 10px;
+        width:150px;
+    }
+
+        .product-container .product .title {
+            font-size: 18pt;
+        }
+
+        .product-container .product button {
+            padding:5px;
+            margin:5px 0 0 0px;
+        }
+
+        .product-container .product a {
+            height: 100%;
+        }
+
+header {
+    display: flex;
 }
 
-.product .title {
-    font-size: 18pt;
+.menu {
+    display: flex;
 }
 
-.product button {
-    padding:5px;
-    margin:5px 0 0 0px;
+    .menu div {
+        height:25px;
+        background-color: wheat;
+        padding: 5px 5px 0 5px;
+        margin:5px;
+        text-decoration: none;
+    }
+
+.userPanel {
+    display: flex;
+    position:absolute;
+    right:0;
 }
 
-.product a {
-    height: 100%;
+    .userPanel div {
+        height:25px;
+        background-color: wheat;
+        padding: 5px 5px 0 5px;
+        margin:5px;
+        text-decoration: none;
+    }
+
+.signin_form {
+    background-color:thistle;
+    text-align:center;
+    width:50%;
+    margin: 25px 25% 0 25%;
+    padding: 25px 0;
 }

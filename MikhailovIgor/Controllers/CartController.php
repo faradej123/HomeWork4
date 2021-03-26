@@ -1,14 +1,20 @@
 <?php
 namespace MikhailovIgor\Controllers;
 use Core\Configs\Consts;
+use MikhailovIgor\Lib\ResponseToFrontEnd;
 
 class CartController extends \Core\Controller{
+
+    public $message = [];
+
     public function __construct()
     {
     }
 
-    public function addToCart($productId){
+    public function addToCart($productId)
+    {
         session_start();
+        $responseToFrontEnd = new ResponseToFrontEnd();
         $userIsAuthorized = FALSE;
         if ($_SESSION["user_id"]) {
             $userId = $_SESSION["user_id"];
@@ -18,18 +24,18 @@ class CartController extends \Core\Controller{
 
         if ($userIsAuthorized) {
             $this->loadModel("cartModel", "CartModel");
-            $this->cartModel->addProductToUserCart($productId, $userId);
+            $isSuccessAdd =  $this->cartModel->addProductToUserCart($productId, $userId);
+            if (!$isSuccessAdd) {
+                $responseToFrontEnd->addError("add_to_cart_fail", "Не удалось добавить товар в корзину");
+            } else {
+                $responseToFrontEnd->addMessage("success_added", "Товар добавлен в корзину");
+                $newQty = $this->cartModel->getProductCountFromProduct($productId);
+                $responseToFrontEnd->addMessage("new_product_qty", $newQty);
+            }
         } else {
-            session_unset();
-            $_SESSION["user_not_found"] = "Ошибка при авторизации пользователя, залогиньтесь заново";
+            $responseToFrontEnd->addError("user_not_found", "Ошибка при авторизации пользователя, залогиньтесь заново");
         }
-
-        //$cartModel->getProductByCurrentUser($productId);
-        //$productCollection = $this->productModel->getAllProducts();
-
-        /*$this->data("productCollection", $productCollection);
-        $this->data("template", Consts::DOCUMENT_ROOT . "\\MikhailovIgor\\Views\\HomePage.php");
-        $this->display(Consts::DOCUMENT_ROOT . "MikhailovIgor\\Views\\index.php");*/
+        $responseToFrontEnd->sendJSON();
     }
 
 }

@@ -10,7 +10,6 @@ class SignInController extends \Core\Controller{
 
     public function showSignInForm()
     {
-        session_start();
         $this->data("actionScript", "https://". $_SERVER['SERVER_NAME'] ."/signin/do");
         $this->data("template", Consts::DOCUMENT_ROOT . "\\MikhailovIgor\\Views\\SignIn.php");
         $this->display(Consts::DOCUMENT_ROOT . "MikhailovIgor\\Views\\index.php");

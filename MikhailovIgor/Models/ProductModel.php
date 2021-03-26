@@ -16,7 +16,9 @@ class ProductModel extends \Core\Model{
         return $productCollection;
     }
 
-    public function addProductToCart($productId)
+
+
+    /*public function addProductToCart($productId)
     {
         $userPassword = md5($userPassword);
         $role = "2";
@@ -27,5 +29,5 @@ class ProductModel extends \Core\Model{
         $stmt->bindParam(4, time());
         $stmt->bindParam(5, $role);
         $stmt->execute();
-    }
+    }*/
 }
