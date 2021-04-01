@@ -56,6 +56,28 @@ return [
             "params" => "$1",
         ],
     ],
+    "admin" => [
+        "GET" => [
+            "controller" => "\\MikhailovIgor\\Controllers\\AdminController",
+            "action" => "showAdminPanel",
+            "params" => "",
+        ],
+    ],
+    "cart" => [
+        "GET" => [
+            "controller" => "\\MikhailovIgor\\Controllers\\CartController",
+            "action" => "showCart",
+            "params" => "",
+        ],
+    ],
+    "cart/confirmorder" => [
+        "POST" => [
+            "controller" => "\\MikhailovIgor\\Controllers\\CartController",
+            "action" => "confirmOrder",
+            "params" => "",
+        ],
+    ],
+    
 ];
 
 /*return [

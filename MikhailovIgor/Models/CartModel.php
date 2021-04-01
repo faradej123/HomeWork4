@@ -1,6 +1,6 @@
 <?php
 namespace MikhailovIgor\Models;
-
+use MikhailovIgor\Lib\Product;
 
 class CartModel extends \Core\Model{//TO DO
     public function addProductToUserCart($productId, $userId)
@@ -78,6 +78,21 @@ class CartModel extends \Core\Model{//TO DO
         $stmt->bindParam(2, $productId);
         $result = $stmt->execute();
         return $result;
+    }
+
+    public function selectAllProductByUserId($userId)
+    {
+        $stmt = $this->pdo->prepare("SELECT `cart`.`id`, `product`.`name`, `cart`.`count`, `product`.`cost` FROM `cart` LEFT JOIN `product` ON `cart`.`product_id` = `product`.`id` WHERE `user_id` = ?");
+        $stmt->bindParam(1, $userId);
+        $stmt->execute();
+        while($productRow = $stmt->fetch()) {
+            $productCollection[] = new Product($productRow["id"], $productRow["name"], $productRow["cost"], $productRow["count"]);
+        }
+        if (count($productCollection)) {
+            return $productCollection;
+        } else {
+            return false;
+        }
     }
     
 }

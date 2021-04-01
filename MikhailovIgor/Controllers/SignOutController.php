@@ -12,7 +12,7 @@ class SignOutController extends \Core\Controller{
     public function signOut()
     {
         session_start();
-        session_unset ();
+        session_unset();
         if ($_SERVER['HTTP_REFERER'] != null) {
             header("Location: ".$_SERVER['HTTP_REFERER']);
         } else {

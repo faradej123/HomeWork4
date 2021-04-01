@@ -11,7 +11,12 @@ class Controller{
 
     public function loadModel($alias, $title)
     {
-        $model = "\\Mikhailovigor\\Models\\" . $title;
+        $parentFolder = stristr(get_class($this), "\\Controllers\\" , true);
+        if ($parentFolder) {
+            $model = "\\" . $parentFolder . "\\Models\\" . $title;
+        } else {
+            $model = "\\Models\\" . $title;
+        }
         $this->$alias = new $model();
     }
 

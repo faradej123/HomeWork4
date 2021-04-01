@@ -1,6 +1,7 @@
 <?php
 namespace MikhailovIgor\Controllers;
 use Core\Configs\Consts;
+use MikhailovIgor\Lib\User;
 
 class SignInController extends \Core\Controller{
 
@@ -18,24 +19,13 @@ class SignInController extends \Core\Controller{
     public function doSignIn()
     {
         session_start();
-    
-        $userEmail = $_POST['email'];
-        $userPassword = $_POST['password'];
-
-        if ($userPassword === '' || $userEmail === '' || !filter_var($userEmail, FILTER_VALIDATE_EMAIL)) {
+        $user = new User($_POST['email'], $_POST['password']);
+        if (!$user) {
             $_SESSION['message'] = 'Проверьте правильность заполненных полей';
             header('Location: https://' . $_SERVER['SERVER_NAME'] . '/signin');
         }
-
-        $this->loadModel("userModel", "UserModel");
-        $userList = $this->userModel->getUsersByEmailAndPassword($userEmail, $userPassword);
-
-        if (count($userList) > 0) {
-            $_SESSION['user_id'] = $userList[0]["id"];
-            $_SESSION['firstname'] = $userList[0]["firstname"];
-            $_SESSION['message'] = 'Авторизация прошла успешно';
-            header('Location: https://' . $_SERVER['SERVER_NAME'] . '/signin');
-    
+        if ($user->signIn()) {
+            header('Location: https://' . $_SERVER['SERVER_NAME']);
         } else {
             $_SESSION['message'] = 'Не верный логин или пароль';
             header('Location: https://' . $_SERVER['SERVER_NAME'] . '/signin');

@@ -25,14 +25,15 @@ class UserModel extends \Core\Model{
     public function insertNewUser($userName, $userEmail, $userPassword)
     {
         $userPassword = md5($userPassword);
-        $role = "2";
-        $stmt = $this->pdo->prepare("INSERT INTO `user` (`firstname`, `email`, `password`, `date_created`, `role_id`) VALUES (?, ?, ?, ?, ?)");
+        $role = "User";
+        $stmt = $this->pdo->prepare("INSERT INTO `user` (`firstname`, `email`, `password`, `date_created`, `role`) VALUES (?, ?, ?, ?, ?)");
         $stmt->bindParam(1, $userName);
         $stmt->bindParam(2, $userEmail);
         $stmt->bindParam(3, $userPassword);
         $stmt->bindParam(4, time());
         $stmt->bindParam(5, $role);
-        $stmt->execute();
+        $result = $stmt->execute();
+        return $result;
     }
 
     public function checkUserIsExist($id)

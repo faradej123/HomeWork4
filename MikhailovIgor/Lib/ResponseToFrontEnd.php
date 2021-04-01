@@ -1,7 +1,7 @@
 <?php
 namespace MikhailovIgor\Lib;
 
-class ResponseToFrontEnd{
+class ResponseToFrontEnd {
 
     private $errors = [];
 

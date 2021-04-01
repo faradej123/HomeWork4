@@ -24,11 +24,18 @@ session_start();
         <div><?= "<a href=https://" . $_SERVER['HTTP_HOST'] . "/export/csv/>Експорт в CSV</a>" ?></div>
     </div>
     <div class="userPanel">
-        <div><?= "<a href=https://" . $_SERVER['HTTP_HOST'] . "/signup/>Регистрация</a>" ?></div>
-        <div><?= "<a href=https://" . $_SERVER['HTTP_HOST'] . "/signin/>Ввойти</a>" ?></div><br><?php 
-        if ($_SESSION["firstname"]) {
-                echo "<div>Авторизован пользователь: <b>" . $_SESSION['firstname'] . "</b></div>";
+        <?php 
+        if (!$_SESSION["name"]) {
+            echo "<a href=https://" . $_SERVER['HTTP_HOST'] . "/signup/><div>Регистрация</div></a>";
+            echo "<a href=https://" . $_SERVER['HTTP_HOST'] . "/signin/><div>Ввойти</div></a>";
+        }
+        if ($_SESSION["name"]) {
+            echo "<div>Авторизован пользователь: <b>" . $_SESSION['name'] . "</b></div>";
+            echo "<a href=https://" . $_SERVER['HTTP_HOST'] . "/cart/><div>Корзина</div></a>";
             echo "<a href=https://" . $_SERVER['HTTP_HOST'] . "/signout/><div>Выйти</div></a>";
+        }
+        if ($_SESSION["role"] == "Admin") {
+            echo "<a href=https://" . $_SERVER['HTTP_HOST'] . "/admin/><div>Админ-панель</div></a>";
         }
         ?>
     </ul>

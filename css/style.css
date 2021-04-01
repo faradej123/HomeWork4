@@ -81,7 +81,7 @@ header {
         text-decoration: none;
     }
 
-.signin_form {
+.signin_form, .signup_form{
     background-color:thistle;
     text-align:center;
     width:50%;
