@@ -17,7 +17,7 @@
 					"_parent": {
 						"$ref": "AAAAAAF38wHPAtFSdmQ="
 					},
-					"name": "ERDDiagram1",
+					"name": "ERDDiagram2",
 					"ownedViews": [
 						{
 							"_type": "ERDEntityView",
