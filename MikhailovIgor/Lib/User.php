@@ -147,4 +147,13 @@ class User extends \Core\Entity {
             $this->id = $_SESSION["user_id"];
         }
     }
+
+    public function isAdmin()
+    {
+        if ($this->getRole() == "Admin") {
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+    }
 }

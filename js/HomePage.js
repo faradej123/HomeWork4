@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
     productSubmitButtons.forEach(button => {
         button.addEventListener("click", addProductToCart);
     });
-    
+    include("https://" + document.domain + "/js/showResponse.js");
 });
 
 
@@ -19,9 +19,13 @@ function addProductToCart(event)
     }).then(result => {
         return result.json();
     }).then(result => {
-        if (result) {
             let parentContainerNode = event.target.parentNode.parentNode.parentNode;
-            let messageBlock = parentContainerNode.querySelector("#messages");
+            showResponse(parentContainerNode, result);
+            if(result["messages"]["new_product_qty"]) {
+                let qtyElem = event.target.parentNode.querySelector(".count span")
+                qtyElem.innerHTML = result["messages"]["new_product_qty"];
+            }
+            /*let messageBlock = parentContainerNode.querySelector("#messages");
             if(messageBlock) {
                 parentContainerNode.removeChild(messageBlock);
             }
@@ -51,14 +55,7 @@ function addProductToCart(event)
                 }
                 infoBlock.append(messagesNode);
             }
-            parentContainerNode.prepend(infoBlock);
-        }
+            parentContainerNode.prepend(infoBlock);*/
     });
-
-    function updateQtyInProduct(qty)
-    {
-        let qtyElem = event.target.parentNode.querySelector(".count span")
-        qtyElem.innerHTML = qty;
-    }
 }
 

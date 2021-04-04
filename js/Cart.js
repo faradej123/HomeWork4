@@ -4,13 +4,12 @@ document.addEventListener("DOMContentLoaded", () => {
     orderSubmitButton.forEach(button => {
         button.addEventListener("click", confirmOrder);
     });
-    
+    include("https://" + document.domain + "/js/showResponse.js");
 });
 
 
 function confirmOrder(event)
 {
-    //let productId = event.target.parentNode.getAttribute("product_id");
     let a = "https://" + document.domain + "/cart/confirmorder/";
     fetch("https://" + document.domain + "/cart/confirmorder/", {
         method: 'POST',
@@ -20,7 +19,11 @@ function confirmOrder(event)
     }).then(result => {
         return result.json();
     }).then(result => {
-        alert(true); //TO DO
+        let parentContainerNode = event.target.parentNode.parentNode.parentNode;
+        let productContainer = document.querySelector(".wrapper .product-container");
+        productContainer.innerHTML = "";
+        include("https://" + document.domain + "/js/showResponse.js");
+        showResponse(parentContainerNode, result);
     })
 
 }

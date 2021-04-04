@@ -56,13 +56,6 @@ return [
             "params" => "$1",
         ],
     ],
-    "admin" => [
-        "GET" => [
-            "controller" => "\\MikhailovIgor\\Controllers\\AdminController",
-            "action" => "showAdminPanel",
-            "params" => "",
-        ],
-    ],
     "cart" => [
         "GET" => [
             "controller" => "\\MikhailovIgor\\Controllers\\CartController",
@@ -77,26 +70,25 @@ return [
             "params" => "",
         ],
     ],
-    
+    "admin" => [
+        "GET" => [
+            "controller" => "\\MikhailovIgor\\Controllers\\AdminController",
+            "action" => "showAdminPanel",
+            "params" => "",
+        ],
+    ],
+    "admin/order-list" => [
+        "GET" => [
+            "controller" => "\\MikhailovIgor\\Controllers\\AdminController",
+            "action" => "showOrders",
+            "params" => "",
+        ],
+    ],
+    "admin/product-edit" => [
+        "GET" => [
+            "controller" => "\\MikhailovIgor\\Controllers\\AdminController",
+            "action" => "showProductEditPanel",
+            "params" => "",
+        ],
+    ],
 ];
-
-/*return [
-    "/" => [
-        "GET" => [
-            "controller" => "MikhailovIgor\\Controllers\\HomePageController",
-            "action" => "showUrls",
-        ],
-    ],
-    "/hw1" => [
-        "GET" => [
-            "controller" => "MikhailovIgor\\Controllers\\HomeWork1Controller",
-            "action" => "showHomeWork",
-        ],
-    ],
-    "/hw2" => [
-        "GET" => [
-            "controller" => "MikhailovIgor\\Controllers\\HomeWork2Controller",
-            "action" => "showHomeWork",
-        ],
-    ],
-];*/

@@ -1,1 +1,0 @@
-<div>Content for Admin</div>

@@ -7,6 +7,7 @@ session_start();
 <head>
     <title>Интернет магазин</title>
     <link rel="stylesheet" href=<?= "https://" . $_SERVER['SERVER_NAME'] . "/css/style.css" ?>>
+    <script src=<?= "https://" . $_SERVER['SERVER_NAME'] . "/js/Main.js" ?>></script>
     <?php
         if (!empty($jsScripts)) {
             foreach ($jsScripts as $scriptPath) {

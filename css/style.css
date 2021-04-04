@@ -2,12 +2,22 @@
     margin:0; padding: 0;
 }
 
-.product-container {
+a { 
+    text-decoration: none;
+    color: black;
+} 
+
+a:visited, a:active, a:hover {
+    color: black;
+}
+
+
+.product-container, .noproduct, .admin-menu, .order-container {
     border: 1px solid darkslategray;
     margin: 10px;
 }
 
-    .product-container #messages, .product-container .products {
+    .product-container #messages, .product-container .products, .order-container .products {
         width: 100%;
         display: flex;
     }
@@ -31,7 +41,7 @@
             display: inline-block;
         }
 
-    .product-container .product {
+    .product-container .product, .order-container .product {
         border: 1px solid darkorange;
         margin: 10px;
         padding: 10px;
@@ -81,10 +91,50 @@ header {
         text-decoration: none;
     }
 
-.signin_form, .signup_form{
+.signin_form, .signup_form {
     background-color:thistle;
     text-align:center;
     width:50%;
     margin: 25px 25% 0 25%;
     padding: 25px 0;
 }
+
+.admin-menu {
+    display: flex;
+}
+
+    .admin-menu div {
+        border: 1px solid darkorange;
+        background-color: wheat;
+        margin: 10px;
+        width:100px;
+        height:40px;
+        text-decoration: none;
+        float: left;
+    }
+
+    .admin-menu div span {
+        width:100%;
+        height:100%;
+        display:block;
+        text-align: center;
+        padding-top: 10px;
+    }
+
+.noproduct {
+    text-align: center;
+    font-size: 24px;
+    padding: 10px;
+}
+
+.order-container .order {
+    border: 1px solid darkorange;
+    margin: 10px;
+    padding: 10px;
+}
+
+    .order-container .order .order_info {
+        background-color: rgb(224, 224, 224);
+        padding: 3px 3px 3px 50px;
+        position: relative
+    }

@@ -88,4 +88,28 @@ class OrderModel extends \Core\Model {
             return true;
         }
     }
+
+    public function getAllOrders()
+    {
+        $stmt = $this->pdo->prepare("SELECT `order`.`id` as `order_id`, `product`.`name` as `product_name`, `product`.`cost` as `product_cost`, `order_products`.`count` as `product_count`, `order`.`date_created`, `user`.`firstname` as `user_name`, `user`.`email` FROM `order_products` LEFT JOIN `order` ON `order_products`.`order_id` = `order`.`id` LEFT JOIN `user` ON `order`.`user_id` = `user`.`id` LEFT JOIN `product` ON `product`.`id` = `order_products`.`product_id`");
+        $result = $stmt->execute();
+        $orders = [];
+        while ($order = $stmt->fetch()) {
+            if (!$orders[$order["order_id"]]) {
+                $orders[$order["order_id"]]["order_id"] = $order["order_id"];
+                $orders[$order["order_id"]]["date_created"] = $order["date_created"];
+                $orders[$order["order_id"]]["email"] = $order["email"];
+                $orders[$order["order_id"]]["user_name"] = $order["user_name"];
+            }
+            $product["name"] = $order["product_name"];
+            $product["cost"] = $order["product_cost"];
+            $product["count"] = $order["product_count"];
+            $orders[$order["order_id"]]["products"][] = $product;
+        }
+        if ($orders) {
+            return $orders;
+        } else {
+            return false;
+        }
+    }
 }

@@ -66,13 +66,8 @@ class CartController extends \Core\Controller{
             } else {
             $response->addMessage("order_confirmed", "Заказ успешно подтвержден");
             }
-            /*$this->data("jsScripts", ["https://" . $_SERVER['SERVER_NAME'] . "/js/cart.js"]);
-            $this->data("products", $product);
-            $this->data("template", Consts::DOCUMENT_ROOT . "\\MikhailovIgor\\Views\\Cart.php");
-            $this->display(Consts::DOCUMENT_ROOT . "MikhailovIgor\\Views\\index.php");*/
         } else {
             $response->addError("user_error", "Ошибка при авторизации");
-            /*header('Location: https://' . $_SERVER['SERVER_NAME']);*/
         }
         $response->sendJSON();
     }

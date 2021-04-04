@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Апр 01 2021 г., 07:53
+-- Время создания: Апр 04 2021 г., 19:38
 -- Версия сервера: 8.0.19
 -- Версия PHP: 7.1.33
 
@@ -57,14 +57,6 @@ CREATE TABLE `order` (
   `user_id` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
---
--- Дамп данных таблицы `order`
---
-
-INSERT INTO `order` (`id`, `date_created`, `user_id`) VALUES
-(15, 1617212366, 7),
-(16, 1617212685, 7);
-
 -- --------------------------------------------------------
 
 --
@@ -77,15 +69,6 @@ CREATE TABLE `order_products` (
   `product_id` int NOT NULL,
   `count` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Дамп данных таблицы `order_products`
---
-
-INSERT INTO `order_products` (`id`, `order_id`, `product_id`, `count`) VALUES
-(10, 15, 1, 2),
-(11, 15, 2, 1),
-(12, 16, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -105,10 +88,10 @@ CREATE TABLE `product` (
 --
 
 INSERT INTO `product` (`id`, `name`, `cost`, `count`) VALUES
-(1, 'Джинсы', 100, 2),
-(2, 'Футболка', 80, 1),
-(3, 'ПК', 1000, 0),
-(4, 'Автомобиль', 10000, 0);
+(1, 'Джинсы', 100, 0),
+(2, 'Футболка', 80, 7),
+(3, 'ПК', 1000, 9),
+(4, 'Автомобиль', 10000, 10);
 
 -- --------------------------------------------------------
 
@@ -179,19 +162,19 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT для таблицы `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
 
 --
 -- AUTO_INCREMENT для таблицы `order`
 --
 ALTER TABLE `order`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT для таблицы `order_products`
 --
 ALTER TABLE `order_products`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT для таблицы `product`
@@ -220,7 +203,7 @@ ALTER TABLE `order`
 --
 ALTER TABLE `order_products`
   ADD CONSTRAINT `order_products_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `order` (`id`),
-  ADD CONSTRAINT `order_products_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`);
+  ADD CONSTRAINT `order_products_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE RESTRICT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
