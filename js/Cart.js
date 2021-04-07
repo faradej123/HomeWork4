@@ -10,7 +10,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function confirmOrder(event)
 {
-    let a = "https://" + document.domain + "/cart/confirmorder/";
     fetch("https://" + document.domain + "/cart/confirmorder/", {
         method: 'POST',
         headers: {
@@ -22,9 +21,7 @@ function confirmOrder(event)
         let parentContainerNode = event.target.parentNode.parentNode.parentNode;
         let productContainer = document.querySelector(".wrapper .product-container");
         productContainer.innerHTML = "";
-        include("https://" + document.domain + "/js/showResponse.js");
         showResponse(parentContainerNode, result);
     })
-
 }
 

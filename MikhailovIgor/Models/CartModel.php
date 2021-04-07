@@ -94,5 +94,17 @@ class CartModel extends \Core\Model{//TO DO
             return false;
         }
     }
+
+    public function getCartsByProductId($productId)
+    {
+        $stmt = $this->pdo->prepare("SELECT `cart`.`id` as `cart_id`, `user`.`firstname` as `user_name`, `product`.`name` as `product_name`, `cart`.`count` as `count` FROM `cart` LEFT JOIN `user` ON `cart`.`user_id`=`user`.`id` LEFT JOIN `product` ON `product`.`id`=`cart`.`product_id` WHERE `cart`.`product_id` = ?;");
+        $stmt->bindParam(1, $productId);
+        if ($stmt->execute()) {
+            $productRow = $stmt->fetchall(\PDO::FETCH_ASSOC);
+            return $productRow;
+        } else {
+            return false;
+        }
+    }
     
 }

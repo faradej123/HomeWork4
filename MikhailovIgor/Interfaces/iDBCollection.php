@@ -1,6 +1,6 @@
 <?php
 namespace MikhailovIgor\Interfaces;
 
-interface iCollection{
+interface iDBCollection{
     public function getAll();
 }

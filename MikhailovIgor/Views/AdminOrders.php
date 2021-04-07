@@ -1,5 +1,4 @@
 <div class = "admin-menu">
-    <div><a href=<?= $urlToOrderList ?>><span>Заказы</span></a></div>
     <div><a href=<?= $urlToProductEdit ?>><span>Продукты</span></a></div>
 </div>
 <?php if ($orderCollection) : ?>
@@ -18,8 +17,10 @@
                     <div class="cost">Цена: <?= $product["cost"] ?></div>
                     <div class="count">Количество: <span><?= $product["count"] ?></span></div>
                 </div>
+                <?php $summ += $product["cost"] * $product["count"]; ?>
                 <?php endforeach; ?>
             </div>
+            <div class="summ">Сумма: <?= $summ ?></div>
         </div>
         <?php endforeach; ?>
     </div>

@@ -3,7 +3,8 @@ namespace MikhailovIgor\Controllers;
 use Core\Configs\Consts;
 use MikhailovIgor\Lib\ResponseToFrontEnd;
 use MikhailovIgor\Lib\User;
-use MikhailovIgor\Lib\CartRepo;
+use MikhailovIgor\Lib\CartCollection;
+use MikhailovIgor\Lib\Cart;
 use MikhailovIgor\Lib\OrderRepo;
 
 class CartController extends \Core\Controller{
@@ -20,7 +21,7 @@ class CartController extends \Core\Controller{
         $user->initUserFromSession();
         $responseToFrontEnd = new ResponseToFrontEnd();
         if ($user->checkForExistInDB()) {
-            $cart = new CartRepo($user->getId());
+            $cart = new Cart($user->getId());
             $isSuccessAdd = $cart->addProductToUserCart($productId);
             if (!$isSuccessAdd) {
                 $responseToFrontEnd->addError("add_to_cart_fail", "Не удалось добавить товар в корзину");
@@ -41,16 +42,15 @@ class CartController extends \Core\Controller{
         $user = new User();
         $user->initUserFromSession();
         if ($userId = $user->getId()) {
-            $cart = new CartRepo($userId);
+            $cart = new CartCollection($userId);
             $product = $cart->getAllProductsFromUserCartByUserId($userId);
-            $this->data("jsScripts", ["https://" . $_SERVER['SERVER_NAME'] . "/js/cart.js"]);
+            $this->addJs("cart.js");
             $this->data("products", $product);
             $this->data("template", Consts::DOCUMENT_ROOT . "\\MikhailovIgor\\Views\\Cart.php");
             $this->display(Consts::DOCUMENT_ROOT . "MikhailovIgor\\Views\\index.php");
         } else {
             header('Location: https://' . $_SERVER['SERVER_NAME']);
         }
-
     }
 
     public function confirmOrder()

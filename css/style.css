@@ -20,6 +20,7 @@ a:visited, a:active, a:hover {
     .product-container #messages, .product-container .products, .order-container .products {
         width: 100%;
         display: flex;
+        flex-wrap: wrap;
     }
 
     .product-container #messages {
@@ -45,7 +46,6 @@ a:visited, a:active, a:hover {
         border: 1px solid darkorange;
         margin: 10px;
         padding: 10px;
-        width:150px;
     }
 
         .product-container .product .title {
@@ -138,3 +138,13 @@ header {
         padding: 3px 3px 3px 50px;
         position: relative
     }
+
+    .order-container .summ {
+        display: inline-block;
+    }
+
+#create-product-form {
+    border: 1px solid darkslategray;
+    margin: 10px;
+    padding: 10px;
+}

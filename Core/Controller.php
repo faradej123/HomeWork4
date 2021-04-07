@@ -4,6 +4,7 @@ namespace Core;
 class Controller{
 
     private $data = [];
+    private $jsScripts = [];
 
     public function __construct()
     {
@@ -25,10 +26,16 @@ class Controller{
         $this->data[$variable] = $value;
     }
 
+    public function addJs($fileName)
+    {
+        $this->jsScripts[] = "https://" . $_SERVER['SERVER_NAME'] . "/js/" . $fileName;
+    }
+
     public function display($path)
     {
         if (file_exists($path)) {
             \extract($this->data);
+            $jsScripts = $this->jsScripts;
             require_once($path);
         }
     }

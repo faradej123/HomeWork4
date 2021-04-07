@@ -91,4 +91,18 @@ return [
             "params" => "",
         ],
     ],
+    "admin/deleteproduct/(.*)" => [
+        "GET" => [
+            "controller" => "\\MikhailovIgor\\Controllers\\AdminController",
+            "action" => "deleteProduct",
+            "params" => "$1",
+        ],
+    ],
+    "admin/createproduct" => [
+        "POST" => [
+            "controller" => "\\MikhailovIgor\\Controllers\\AdminController",
+            "action" => "createProduct",
+            "params" => "",
+        ],
+    ],
 ];

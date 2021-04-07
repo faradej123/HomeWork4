@@ -1,12 +1,12 @@
 <?php
 namespace MikhailovIgor\Lib;
 
-class Product{
+class Product extends \Core\Entity implements \MikhailovIgor\Interfaces\iDBEntity{
     private $id;
     private $name; 
     private $cost; 
     private $count; 
-    public function __construct($id, $name, $cost, $count)
+    public function __construct($id = NULL, $name = NULL, $cost = NULL, $count = NULL)
     {
         $this->id = $id;
         $this->name = $name;
@@ -17,6 +17,15 @@ class Product{
     public function getId()
     {
         return $this->id;
+    }
+
+    public function setId(Int $id)
+    {
+        if ($id > 0) {
+            $this->id = $id;
+        } else {
+            return false;
+        }
     }
 
     public function getName()
@@ -32,5 +41,23 @@ class Product{
     public function getCount()
     {
         return $this->count;
+    }
+
+    public function delete()
+    {
+        try {
+            if ($this->id <= 0) {
+                throw new Exception("Id is incorrrect");
+            }
+            $this->loadModel("productModel", "ProductModel");
+            $result = $this->productModel->deleteProductById($this->id);
+            if ($result) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch(Exception $e) {
+            return FALSE;
+        }
     }
 }

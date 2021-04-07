@@ -1,7 +1,7 @@
 <?php
 namespace MikhailovIgor\Lib;
 
-class CartRepo extends \Core\Entity {
+class Cart extends \Core\Entity {
 
     private $userId;
 
@@ -31,4 +31,12 @@ class CartRepo extends \Core\Entity {
             return false;
         }
     }
+
+    public function getCartsByProductId($productId)
+    {
+        $this->loadModel("orderModel", "OrderModel");
+        $productCollection = $this->orderModel->getCartsByProductId($productId);
+        return $productCollection;
+    }
+    
 }
