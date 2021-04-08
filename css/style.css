@@ -11,36 +11,34 @@ a:visited, a:active, a:hover {
     color: black;
 }
 
+.messages {
+    text-align: center;
+}
+
+.messages .errors,  .messages .successfuly{
+    width:100%;
+    padding:5px;
+    display: inline-block;
+}
+
+.messages .successfuly {
+    background-color: green;
+}
+
+.messages .errors {
+    background-color: red;
+}
 
 .product-container, .noproduct, .admin-menu, .order-container {
     border: 1px solid darkslategray;
     margin: 10px;
 }
 
-    .product-container #messages, .product-container .products, .order-container .products {
+    .product-container .messages, .product-container .products, .order-container .products {
         width: 100%;
         display: flex;
         flex-wrap: wrap;
     }
-
-    .product-container #messages {
-        text-align: center;
-    }
-
-        .product-container #messages .errors,  .product-container #messages .successfuly{
-            width:100%;
-            padding:5px;
-        }
-   
-        .product-container .errors {
-            background-color: red;
-            display: inline-block;
-        }
-
-        .product-container .successfuly {
-            background-color: green;
-            display: inline-block;
-        }
 
     .product-container .product, .order-container .product {
         border: 1px solid darkorange;

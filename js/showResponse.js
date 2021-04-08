@@ -3,12 +3,12 @@ function showResponse(parentContainerNode, response)
     if(!parentContainerNode) {
         return false;
     } 
-    let messageBlock = parentContainerNode.querySelector("#messages");
+    let messageBlock = parentContainerNode.querySelector(".messages");
     if(messageBlock) {
         parentContainerNode.removeChild(messageBlock);
     }
     let infoBlock = document.createElement("div");
-    infoBlock.id = "messages";
+    infoBlock.classList.add("messages");
     if (response["errors"].length != 0) {
         let errors = document.createElement("div");
         errors.classList.add("errors");

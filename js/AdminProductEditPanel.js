@@ -1,6 +1,7 @@
 "use strict"
 document.addEventListener("DOMContentLoaded", () => {
     include("https://" + document.domain + "/js/showResponse.js");
+    include("https://" + document.domain + "/js/addProduct.js");
     let orderDeleteButton = document.querySelectorAll(".wrapper .product-container .products button");
     orderDeleteButton.forEach(button => {
         button.addEventListener("click", deleteProduct);
@@ -47,12 +48,14 @@ function createProduct(event)
     }).then(result => {
         return result.json();
     }).then(result => {
-        /*let parentContainerNode = event.target.parentNode.parentNode.parentNode;
-        showResponse(parentContainerNode, result);
-        if (result.messages["deleted_ok"]) {
-            let deletingBlock = event.target.parentNode;
-            deletingBlock.parentNode.removeChild(deletingBlock);
-        }*/
+        let parentContainerResponseNode = event.target.parentNode;
+        showResponse(parentContainerResponseNode, result);
+        if (result.messages.product_added) {
+            let productContainer = document.querySelector(".product-container .products")
+            let newProductElem = addProduct(productContainer, result.data);
+            let newButton = newProductElem.querySelector("button");
+            newButton.addEventListener("click", deleteProduct);
+        }
     })
 }
 

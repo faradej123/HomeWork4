@@ -23,4 +23,26 @@ class ProductModel extends \Core\Model{
         $result = $stmt->execute();
         return $result;
     }
+
+    public function createNewProduct($name, $cost, $count) {
+        $stmt = $this->pdo->prepare("INSERT INTO product (`name`, `cost`, `count`) VALUES (?, ?, ?)");
+        $stmt->bindParam(1, $name);
+        $stmt->bindParam(2, $cost);
+        $stmt->bindParam(3, $count);
+        $result = $stmt->execute();
+        return $this->pdo->lastInsertId();
+    }
+
+    public function updateProduct($productId, $name = NULL, $cost = NULL, $count = NULL) {
+        return false;//TO DO
+    }
+
+    public function getProductById($id)
+    {
+        $stmt = $this->pdo->prepare("SELECT * FROM `product` WHERE `id` = ?");
+        $stmt->bindParam(1, $id);
+        $stmt->execute();
+        $productCollection = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        return $productCollection;
+    }
 }

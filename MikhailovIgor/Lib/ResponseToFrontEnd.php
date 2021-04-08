@@ -4,8 +4,8 @@ namespace MikhailovIgor\Lib;
 class ResponseToFrontEnd {
 
     private $errors = [];
-
     private $messages = [];
+    private $data = [];
  
     public function __construct()
     {
@@ -20,7 +20,7 @@ class ResponseToFrontEnd {
             return false;
         } else {
             $this->errors[$errorCode] = $errorMessage;
-            return $this;
+            return TRUE;
         }
     }
 
@@ -32,7 +32,19 @@ class ResponseToFrontEnd {
             return false;
         } else {
             $this->messages[$messageCode] = $messageMessage;
-            return $this;
+            return TRUE;
+        }
+    }
+
+    public function addData(String $dataCode, String $dataMessage)
+    {
+        $dataCode = trim($dataCode);
+        $dataMessage = trim($dataMessage);
+        if ($dataCode == "") {
+            return false;
+        } else {
+            $this->data[$dataCode] = $dataMessage;
+            return TRUE;
         }
     }
 
@@ -40,8 +52,9 @@ class ResponseToFrontEnd {
     {
         $json["errors"] = $this->errors;
         $json["messages"] = $this->messages;
+        $json["data"] = $this->data;
         echo json_encode($json);
-        return $this;
+        return TRUE;
     }
 
 }

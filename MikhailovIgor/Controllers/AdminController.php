@@ -105,9 +105,29 @@ class AdminController extends \Core\Controller{
 
     public function createProduct()
     {
-        //0.01 - 99999999.99
         try {
+            $responseToFrontEnd = new ResponseToFrontEnd();
             $postBody = json_decode(file_get_contents('php://input'));
+            $newProduct = new Product();
+            if (!$newProduct->setName($postBody->productName)) {
+                $responseToFrontEnd->addError("incorrect_product_name", "Неправильное имя продукта");
+                throw new Exception();
+            } else if (!$newProduct->setCost($postBody->productCost)){
+                $responseToFrontEnd->addError("incorrect_product_name", "Некорректная цена");
+                throw new Exception();
+            } else if (!$newProduct->setCount($postBody->productCount)){
+                $responseToFrontEnd->addError("incorrect_product_name", "Некорректное количество");
+                throw new Exception();
+            }
+            $id = $newProduct->save();
+            if ($id) {
+                $responseToFrontEnd->addMessage("product_added", "Продукт успешно добавлен");
+                $responseToFrontEnd->addData("product_id", $newProduct->getId());
+                $responseToFrontEnd->addData("product_name", $newProduct->getName());
+                $responseToFrontEnd->addData("product_cost", $newProduct->getCost());
+                $responseToFrontEnd->addData("product_count", $newProduct->getCount());
+            }
+
         } catch (Exception $e) {
 
         } finally {
