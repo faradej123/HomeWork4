@@ -93,17 +93,17 @@ class User extends \Core\Entity {
         $this->loadModel("userModel", "UserModel");
         $userList = $this->userModel->getUsersByEmailAndPassword($this->email, $this->password);
         if (count($userList) > 0) {
-            $this->setName($userList[0]["firstname"]);
-            $this->setEmail($userList[0]["email"]);
-            $this->dateCreated = $userList[0]["date_created"];
-            $this->role = $userList[0]["role"];
-            $this->id = $userList[0]["id"];
-            session_start();
-            $_SESSION['name'] = $this->getName();
-            $_SESSION['email'] = $this->getEmail();
-            $_SESSION['role'] = $this->getRole();
-            $_SESSION['user_id'] = $this->getId();
-            return true;
+            $sessionId = md5($userList[0]["email"] . $_SERVER["HTTP_USER_AGENT"] . "ololo" . time());
+            $result = $this->userModel->insertSession($sessionId, $userList[0]["id"], time()+60*60);
+            if ($result) {
+                session_start();
+                $_SESSION['id'] = $sessionId;
+                $_SESSION['name'] = $userList[0]["firstname"];
+                $_SESSION['email'] = $userList[0]["email"];
+                return true;
+            } else {
+                return false;
+            }
         } else {
             return false;
         }
@@ -133,18 +133,19 @@ class User extends \Core\Entity {
 
     public function initUserFromSession()
     {
+        $this->loadModel("userModel", "UserModel");
+        session_set_cookie_params(time()+60*24, '/', $_SERVER['SERVER_NAME'], TRUE, TRUE);
         session_start();
-        if ($_SESSION["name"]) {
-            $this->name = $_SESSION["name"];
-        }
-        if ($_SESSION["email"]) {
-            $this->email = $_SESSION["email"];
-        }
-        if ($_SESSION["role"]) {
-            $this->role = $_SESSION["role"];
-        }
-        if ($_SESSION["user_id"]) {
-            $this->id = $_SESSION["user_id"];
+        $result = $this->userModel->getUserBySessionId($_SESSION["id"]);
+
+        if ($result) {
+            $this->id = $result[0]["id"];
+            $this->name = $result[0]["firstname"];
+            $this->email = $result[0]["email"];
+            $this->role = $result[0]["role"];
+            $this->dateCreated = $result[0]["date_created"];
+        } else {
+            return false;
         }
     }
 

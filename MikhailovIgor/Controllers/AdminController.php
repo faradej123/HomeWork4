@@ -20,6 +20,8 @@ class AdminController extends \Core\Controller{
         $user = new User();
         $user->initUserFromSession();
         if($user->isAdmin()) {
+            $this->data("user_name", $user->getName());
+            $this->data("user_role", $user->getRole());
             $this->data("urlToOrderList", "https://". $_SERVER['SERVER_NAME'] ."/admin/order-list");
             $this->data("urlToProductEdit", "https://". $_SERVER['SERVER_NAME'] ."/admin/product-edit");
             $this->data("template", Consts::DOCUMENT_ROOT . "\\MikhailovIgor\\Views\\AdminMain.php");
@@ -34,6 +36,8 @@ class AdminController extends \Core\Controller{
         $user = new User();
         $user->initUserFromSession();
         if($user->isAdmin()) {
+            $this->data("user_name", $user->getName());
+            $this->data("user_role", $user->getRole());
             $orders = new OrderCollection();
             $orderCollection = $orders->getAll();
             $this->data("orderCollection", $orderCollection);
@@ -50,6 +54,8 @@ class AdminController extends \Core\Controller{
         $user = new User();
         $user->initUserFromSession();
         if($user->isAdmin()) {
+            $this->data("user_name", $user->getName());
+            $this->data("user_role", $user->getRole());
             $productCollection = new ProductCollection();
             $products = $productCollection->getAll();
             $this->addJs("AdminProductEditPanel.js");

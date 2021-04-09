@@ -48,4 +48,23 @@ class UserModel extends \Core\Model{
             return true;
         }
     }
+
+    public function insertSession($sessionId, $userId, $expirationTime)
+    {
+        $stmt = $this->pdo->prepare("INSERT INTO `user_sessions` (`session_id`, `user_id`, `expiration_time`) VALUES (?, ?, ?)");
+        $stmt->bindParam(1, $sessionId);
+        $stmt->bindParam(2, $userId);
+        $stmt->bindParam(3, $expirationTime);
+        $result = $stmt->execute();
+        return $result;
+    }
+
+    public function getUserBySessionId($sessionId)
+    {
+        $stmt = $this->pdo->prepare("SELECT `user`.`id`, `user`.`firstname`, `user`.`email`, `user`.`date_created`, `user`.`role` FROM `user` LEFT JOIN `user_sessions` ON `user`.`id`=`user_sessions`.`user_id` WHERE `user_sessions`.`session_id`=?" );
+        $stmt->bindParam(1, $sessionId);
+        $stmt->execute();
+        $userList = $stmt->fetchAll(2);
+        return $userList;
+    }
 }

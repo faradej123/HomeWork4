@@ -21,7 +21,7 @@ class Cart extends \Core\Entity {
         return $isSuccessAdd;
     }
 
-    public function getAllProductsFromUserCartByUserId($userId)
+    public function getAllProductsByUserId($userId)
     {
         $this->loadModel("cartModel", "CartModel");
         $products = $this->cartModel->selectAllProductByUserId($userId);

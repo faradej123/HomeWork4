@@ -5,7 +5,7 @@ use MikhailovIgor\Lib\ResponseToFrontEnd;
 use MikhailovIgor\Lib\User;
 use MikhailovIgor\Lib\CartCollection;
 use MikhailovIgor\Lib\Cart;
-use MikhailovIgor\Lib\OrderRepo;
+use MikhailovIgor\Lib\Order;
 
 class CartController extends \Core\Controller{
 
@@ -42,8 +42,10 @@ class CartController extends \Core\Controller{
         $user = new User();
         $user->initUserFromSession();
         if ($userId = $user->getId()) {
-            $cart = new CartCollection($userId);
-            $product = $cart->getAllProductsFromUserCartByUserId($userId);
+            $this->data("user_name", $user->getName());
+            $this->data("user_role", $user->getRole());
+            $cart = new Cart($userId);
+            $product = $cart->getAllProductsByUserId($userId);
             $this->addJs("cart.js");
             $this->data("products", $product);
             $this->data("template", Consts::DOCUMENT_ROOT . "\\MikhailovIgor\\Views\\Cart.php");
@@ -59,7 +61,7 @@ class CartController extends \Core\Controller{
         $user = new User();
         $user->initUserFromSession();
         if ($userId = $user->getId()) {
-            $order = new OrderRepo($userId);
+            $order = new Order($userId);
             $result = $order->confirmOrder();
             if (!$result) {
                 $response->addError("order_confirm", "Ошибка при подтверждении заказа");

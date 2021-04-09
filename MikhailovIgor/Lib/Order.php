@@ -2,7 +2,7 @@
 namespace MikhailovIgor\Lib;
 use Exception;
 
-class OrderRepo extends \Core\Entity {
+class Order extends \Core\Entity {
 
     private $userId;
 

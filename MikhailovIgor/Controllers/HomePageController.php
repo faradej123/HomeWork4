@@ -15,6 +15,8 @@ class HomePageController extends \Core\Controller{
         if ($user->checkForExistInDB()) {
             $productCollection = new ProductCollection();
             $products = $productCollection->getAll();
+            $this->data("user_name", $user->getName());
+            $this->data("user_role", $user->getRole());
             if ($productCollection) {
                 $this->addJs("HomePage.js");
                 $this->data("products", $products);

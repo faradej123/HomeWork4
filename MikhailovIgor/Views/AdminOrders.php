@@ -4,6 +4,7 @@
 <?php if ($orderCollection) : ?>
     <div class="order-container">
         <?php foreach ($orderCollection as $order): ?>
+        <?php $summ = 0; ?>
         <div class="order" order_id = <?= $order["order_id"] ?>>
             <div class="order_info">
                 <div class="user_name">Имя пользователя: <?= $order["user_name"] ?></div>
