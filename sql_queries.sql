@@ -27,7 +27,7 @@ FROM `order_products`
 LEFT JOIN `product` ON `product`.`id`=`order_products`.`product_id`
 LEFT JOIN `order` ON `order`.`id`=`order_products`.`order_id`
 LEFT JOIN `user` ON `user`.`id`=`order`.`user_id`
-GROUP BY `order_products`.`order_id`, `user`.`email`
+GROUP BY `order_products`.`order_id`, `user`.`email` ORDER BY `summ` ASC
 
 --6
 SELECT * FROM `user` WHERE `role` != "Admin" AND `role` != "User"
