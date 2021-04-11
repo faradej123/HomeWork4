@@ -20,7 +20,14 @@ SELECT `user_id`, `firstname`, `email` FROM
 FROM `user` LEFT JOIN `order` on `user`.`id`=`order`.`user_id`) as `result` 
 WHERE `result`.`order_id` IS NULL
 
---5 TO DO
-SELECT `order`.`id`, `user`.`firstname`, `user`.`email` FROM `order` LEFT JOIN `user` ON `order`.`user_id`=`user`.`id`;
+--5
+SELECT `order_products`.`order_id`, `user`.`email`,
+sum(`product`.`cost` * `order_products`.`count`) as `summ` 
+FROM `order_products` 
+LEFT JOIN `product` ON `product`.`id`=`order_products`.`product_id`
+LEFT JOIN `order` ON `order`.`id`=`order_products`.`order_id`
+LEFT JOIN `user` ON `user`.`id`=`order`.`user_id`
+GROUP BY `order_products`.`order_id`, `user`.`email`
 
-SELECT `order`.`id`, `product`.`cost` FROM `order_products` WHERE GROUP BY `order_products`.`order_id` 
+--6
+SELECT * FROM `user` WHERE `role` != "Admin" AND `role` != "User"
