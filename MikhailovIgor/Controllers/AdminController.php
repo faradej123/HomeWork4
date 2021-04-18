@@ -8,6 +8,7 @@ use MikhailovIgor\Lib\CartCollection;
 use MikhailovIgor\Lib\Product;
 use MikhailovIgor\Lib\ResponseToFrontEnd;
 use Exception;
+use MikhailovIgor\Lib\ExportProduct;
 
 class AdminController extends \Core\Controller{
 
@@ -22,8 +23,10 @@ class AdminController extends \Core\Controller{
         if($user->isAdmin()) {
             $this->data("user_name", $user->getName());
             $this->data("user_role", $user->getRole());
+
             $this->data("urlToOrderList", "https://". $_SERVER['SERVER_NAME'] ."/admin/order-list");
             $this->data("urlToProductEdit", "https://". $_SERVER['SERVER_NAME'] ."/admin/product-edit");
+
             $this->data("template", Consts::DOCUMENT_ROOT . "\\MikhailovIgor\\Views\\AdminMain.php");
             $this->display(Consts::DOCUMENT_ROOT . "MikhailovIgor\\Views\\index.php");
         } else {
@@ -60,7 +63,11 @@ class AdminController extends \Core\Controller{
             $products = $productCollection->getAll();
             $this->addJs("AdminProductEditPanel.js");
             $this->data("products", $products);
+
             $this->data("urlToOrderList", "https://". $_SERVER['SERVER_NAME'] ."/admin/order-list");
+            $this->data("urlToXmlExport", "https://". $_SERVER['SERVER_NAME'] ."/admin/xmlexport");
+            $this->data("urlToJsonExport", "https://". $_SERVER['SERVER_NAME'] ."/admin/jsonexport");
+
             $this->data("template", Consts::DOCUMENT_ROOT . "\\MikhailovIgor\\Views\\AdminProducts.php");
             $this->display(Consts::DOCUMENT_ROOT . "MikhailovIgor\\Views\\index.php");
         } else {
@@ -97,7 +104,7 @@ class AdminController extends \Core\Controller{
             $productToDelete = new Product();
             $productToDelete->setId($productId);
             $deleteResult = $productToDelete->delete();
-            if (!deleteResult) {
+            if (!$deleteResult) {
                 $responseToFrontEnd->addError("product_delete_fail", "Неизвестная шибка удаления товара с БД");
                 throw new Exception("product_delete_fail");
             }
@@ -138,6 +145,32 @@ class AdminController extends \Core\Controller{
 
         } finally {
             $responseToFrontEnd->sendJson();
+        }
+    }
+
+    public function xmlExport()
+    {
+        $user = new User();
+        $user->initUserFromSession();
+        if($user->isAdmin()) {
+            $productCollection = new ProductCollection();
+            $products = $productCollection->getAll();
+            ExportProduct::makeExportInXML($products);
+        } else {
+            header('Location: https://' . $_SERVER['SERVER_NAME']);
+        }
+    }
+
+    public function jsonExport()
+    {
+        $user = new User();
+        $user->initUserFromSession();
+        if($user->isAdmin()) {
+            $productCollection = new ProductCollection();
+            $products = $productCollection->getAll();
+            ExportProduct::makeExportInJSON($products);
+        } else {
+            header('Location: https://' . $_SERVER['SERVER_NAME']);
         }
     }
 }

@@ -1,5 +1,6 @@
 <?php
 namespace MikhailovIgor\Lib;
+use \Exception;
 
 class Product extends \Core\Entity implements \MikhailovIgor\Interfaces\iDBEntity{
     private $id;

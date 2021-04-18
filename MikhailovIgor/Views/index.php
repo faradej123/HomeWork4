@@ -20,9 +20,7 @@ session_start();
 <header>
     <div class="menu">
         <div><?= "<a href=https://" . $_SERVER['HTTP_HOST'] . ">На главную!</a>" ?></div>
-        <!--<div><?= "<a href=https://" . $_SERVER['HTTP_HOST'] . "/export/xml/>Експорт в XML</a>" ?></div>
-        <div><?= "<a href=https://" . $_SERVER['HTTP_HOST'] . "/export/json/>Експорт в JSON</a>" ?></div>
-        <div><?= "<a href=https://" . $_SERVER['HTTP_HOST'] . "/export/csv/>Експорт в CSV</a>" ?></div>-->
+
     </div>
     <div class="userPanel">
         <?php 

@@ -1,5 +1,7 @@
 <div class = "admin-menu">
     <div><a href=<?= $urlToOrderList ?>><span>Заказы</span></a></div>
+    <div><a href=<?= $urlToXmlExport ?> target="_blank"><span>Експорт в XML</span></a></div>
+    <div><a href=<?= $urlToJsonExport ?> target="_blank"><span>Експорт в Json</span></a></div>
 </div>
 <div class="product-container">
     <div class="products">

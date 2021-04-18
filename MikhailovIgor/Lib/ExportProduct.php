@@ -4,17 +4,11 @@ namespace MikhailovIgor\Lib;
 use MikhailovIgor\Lib\Product;
 use \Exception;
 use \XMLWriter;
-use MikhailovIgor\Lib\Logger;
 
 class ExportProduct extends \MikhailovIgor\Lib\Export implements \MikhailovIgor\Interfaces\iExportFormats {
     private function __construct()
     {
         
-    }
-
-    public static function initLogger(){
-        parent::$logger = Logger::getInstance();
-        parent::$logger->setPathToLogFile($_SERVER["CONTEXT_DOCUMENT_ROOT"] . "/logs/export_log.txt");
     }
 
     public static function makeExportInCSV($productList)
@@ -25,17 +19,15 @@ class ExportProduct extends \MikhailovIgor\Lib\Export implements \MikhailovIgor\
                 if ($product instanceof Product) {
                     $csvStr .= ($product->getName() ? $product->getName() : "NULL") . ";" . ($product->getCost() ? $product->getCost() : "NULL") . ";" . ($product->getCount() ? $product->getCount() : "NULL") . "\n";
                 } else {
-                    self::$logger->createLog("Получен тип данных отличный от Product, запись была пропущена");
                     continue;
                 }
             }
-        } else if ($product instanceof Product) {
-            $csvStr .= ($product->getName() ? $product->getName() : "NULL") . ";" . ($product->getCost() ? $product->getCost() : "NULL") . ";" . ($product->getCount() ? $product->getCount() : "NULL") . "\n";
+        } else if ($productList instanceof Product) {
+            $csvStr .= ($productList->getName() ? $productList->getName() : "NULL") . ";" . ($productList->getCost() ? $productList->getCost() : "NULL") . ";" . ($productList->getCount() ? $productList->getCount() : "NULL") . "\n";
         } else {
-            self::$logger->createLog("Получен тип данных отличный от Product, запись была пропущена");
         }
         $fileName = "ProductExport.csv";
-        self::sendFileToDownload($fileName, $csvStr);
+        return self::sendFileToDownload($fileName, $csvStr);
     }
 
     public static function makeExportInXML($productList)
@@ -43,7 +35,7 @@ class ExportProduct extends \MikhailovIgor\Lib\Export implements \MikhailovIgor\
         $xmlObj = new XMLWriter();
         $xmlObj->openMemory();
         $xmlObj->setIndent(2);
-        $xmlObj->startDocument();
+        $xmlObj->startDocument('1.0', 'UTF-8');
         if (is_array($productList) && !empty($productList)) {
             foreach($productList as $product) {
                 if ($product instanceof Product) {
@@ -56,7 +48,6 @@ class ExportProduct extends \MikhailovIgor\Lib\Export implements \MikhailovIgor\
                     $xmlObj->writeAttribute('Count', $count ? $count : "NULL");
                     $xmlObj->endElement();
                 } else {
-                    self::$logger->createLog("Получен тип данных отличный от Product, запись была пропущена");
                     continue;
                 }
             }
@@ -70,12 +61,11 @@ class ExportProduct extends \MikhailovIgor\Lib\Export implements \MikhailovIgor\
             $xmlObj->writeAttribute('Count', $count ? $count : NULL);
             $xmlObj->endElement();
         } else {
-            self::$logger->createLog("Получен тип данных отличный от Product, запись была пропущена");
         }
         $xmlObj->endDocument();
         $xmlStr = $xmlObj->flush();
         $fileName = "ProductExport.xml";
-        self::sendFileToDownload($fileName, $xmlStr);
+        return self::sendFileToDownload($fileName, $xmlStr);
     }
 
     public static function makeExportInJSON($productList)
@@ -92,11 +82,6 @@ class ExportProduct extends \MikhailovIgor\Lib\Export implements \MikhailovIgor\
                         "cost" => $cost ? $cost : "NULL",
                         "count" => $count ? $count : "NULL",
                     ];
-                } else {
-                    if(self::$logger){
-                        self::$logger->createLog("Получен тип данных отличный от Product, запись была пропущена");
-                    }
-                    continue;
                 }
             }
         } else if ($productList instanceof Product) {
@@ -105,13 +90,9 @@ class ExportProduct extends \MikhailovIgor\Lib\Export implements \MikhailovIgor\
                 "cost" => $productList->getCost(),
                 "count" => $productList->getCount(),
             ];
-        } else {
-            if(self::$logger){
-                self::$logger->createLog("Получен тип данных отличный от Product, запись была пропущена");
-            }
         }
-        $jsonStr = json_encode($newObj);
+        $jsonStr = json_encode($newObj, JSON_UNESCAPED_UNICODE);
         $fileName = "ProductExport.json";
-        self::sendFileToDownload($fileName, $jsonStr);
+        return self::sendFileToDownload($fileName, $jsonStr);
     }
 }

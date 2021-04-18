@@ -105,4 +105,18 @@ return [
             "params" => "",
         ],
     ],
+    "admin/xmlexport" => [
+        "GET" => [
+            "controller" => "\\MikhailovIgor\\Controllers\\AdminController",
+            "action" => "xmlExport",
+            "params" => "",
+        ],
+    ],
+    "admin/jsonexport" => [
+        "GET" => [
+            "controller" => "\\MikhailovIgor\\Controllers\\AdminController",
+            "action" => "jsonExport",
+            "params" => "",
+        ],
+    ],
 ];

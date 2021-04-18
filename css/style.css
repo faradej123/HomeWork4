@@ -106,9 +106,9 @@ header {
         background-color: wheat;
         margin: 10px;
         width:100px;
-        height:40px;
         text-decoration: none;
         float: left;
+        padding: 5px;
     }
 
     .admin-menu div span {
@@ -116,7 +116,6 @@ header {
         height:100%;
         display:block;
         text-align: center;
-        padding-top: 10px;
     }
 
 .noproduct {
